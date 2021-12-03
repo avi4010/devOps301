@@ -1,4 +1,4 @@
---
+---
 # tasks file for tomcat
 
 - name: Tomcat Home Dir in place
@@ -16,8 +16,9 @@
 - name: Tomcat WebApp Dir
   file: path={{doc_tomcat_webapps}} state=directory
 
-- name: Deploy petclinic war file in tomcat webapps folder
+- name: Deploy Petclinic war file
   copy: src=files/petclinic.war dest={{doc_tomcat}}/tomcat/webapps/
 
 - name: Start Tomcat App Server
   shell: "nohup sh /opt/SP/apps/tomcat/bin/catalina.sh start"
+
