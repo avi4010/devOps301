@@ -1,5 +1,8 @@
 node {
 
+ def server = Artifactory.server "01"
+ def buildInfo = Artifactory.newBuildInfo()
+
  stage('Git ChechOut') {
   git branch: 'main', url: 'https://github.com/avi4010/devOps301.git' 
  }
@@ -45,11 +48,17 @@ node {
   sh 'docker-compose up -d --build'
  }
 
- stage('Getting Ready For Ansible Deployment'){
-     sh "cp -rf target/petclinic.war terraform-code/ansible-code/roles/petclinic/files/"
- }
-
- stage('Terraform Deployment'){
-     sh "cd terraform-code; terraform init ; terraform apply --auto-approve"
+ stage('Getting Ready For Ansible Deployment'){
+
+     sh "cp -rf target/petclinic.war terraform-code/ansible-code/roles/petclinic/files/"
+
+ }
+
+
+
+ stage('Terraform Deployment'){
+
+     sh "cd terraform-code; terraform init ; terraform apply --auto-approve"
+
  }
 }
