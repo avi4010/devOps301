@@ -44,5 +44,12 @@ node {
  stage('Docker Deployment') {
   sh 'docker-compose up -d --build'
  }
- 
+
+ stage('Getting Ready For Ansible Deployment'){
+     sh "cp -rf target/petclinic.war terraform-code/ansible-code/roles/petclinic/files/"
+ }
+
+ stage('Terraform Deployment'){
+     sh "cd terraform-code; terraform init ; terraform apply --auto-approve"
+ }
 }
