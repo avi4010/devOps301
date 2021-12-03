@@ -1,6 +1,7 @@
 node {
 
- def server = Artifactory.server "01"
+ def server = Artifactory.server "01"
+
  def buildInfo = Artifactory.newBuildInfo()
 
  stage('Git ChechOut') {
@@ -21,6 +22,12 @@ node {
 
  stage('Maven Package') {
   sh 'mvn package'
+ }
+
+ stage('SonarQubeScan') {
+   withSonarQubeEnv('Sonar'){
+     sh 'mvn sonar:sonar'
+   }
  }
 
  stage('Build Management') {
@@ -53,8 +60,6 @@ node {
      sh "cp -rf target/petclinic.war terraform-code/ansible-code/roles/petclinic/files/"
 
  }
-
-
 
  stage('Terraform Deployment'){
 
