@@ -64,12 +64,14 @@ node {
    } catch (all) {
        currentBuild.result = 'FAILURE'
    } finally {
-        emailext attachLog: true, body: '''Hi 
+       stage('Send email with status') {
+            emailext attachLog: true, body: '''Hi 
 
             Below is the status and build log attached
 
             $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
 
-            Check console output at $BUILD_URL to view the results.''', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'avinashseelam1996@gmail.com'
+            Check console output at $BUILD_URL to view the results.''', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'avinash.seelam2@mindtree.com'
+       }
     }
 }
